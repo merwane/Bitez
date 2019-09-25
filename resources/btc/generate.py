@@ -14,9 +14,4 @@ class GenerateBtcKey:
     def generate_wit_addr(self):
         return self.network.segwit_address
 
-"""
-lol = GenerateKey()
-print(lol.generate_prkey())
-print(lol.generate_std_addr())
-print(lol.generate_wit_addr())
-"""
+

@@ -15,6 +15,8 @@ cryptography = "*"
 bit = "*"
 bitcash = "*"
 python-dotenv = "*"
+web3 = "*"
+requests = "*"
 
 [requires]
 python_version = "3.6"

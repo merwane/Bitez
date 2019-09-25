@@ -36,3 +36,6 @@ else:
 
 # encryption secrect
 ENCRYPTION_SECRET = os.getenv('ENCRYPTION_SECRET')
+
+# ethereum infura api key
+INFURA_API_KEY = os.getenv('INFURA_API_KEY')
