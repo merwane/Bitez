@@ -9,6 +9,9 @@ from resources.btc.valid import btc_addr_is_valid
 # bch
 from resources.bch.transaction import bch_tx
 from resources.bch.valid import bch_addr_is_valid
+# eth
+from resources.eth.transaction import eth_tx
+from resources.eth.valid import eth_addr_is_valid
 
 # init db
 client = Database()
@@ -72,5 +75,36 @@ class Transaction(Resource):
                 status = 'failed'
             else:
                 status = 'success'
+        # Ethereum
+        elif coin == 'eth':
+            # validate recipient address
+            if eth_addr_is_valid(recipient) == False:
+                abort(400, message="Recipient\'s address not valid")
+            # get and decrypt prkeys
+            user = db.user.find_one({'api_keys.key': api_key}, {'username': True})
+            wallet = db.wallet.find_one({'username': user['username']}, {'eth_wallet.address': True, 'eth_wallet.prkey': True})
+
+            enc_prkeys = []
+            for prkey in wallet['eth_wallet']:
+                enc_prkeys.append(prkey['prkey'])
+            
+            prkeys = []
+            for prkey in enc_prkeys:
+                prkeys.append(decrypt(str.encode(prkey)))
+            
+            addresses = []
+            for address in wallet['eth_wallet']:
+                addresses.append(address['address'])
+            
+            for address, prkey in zip(addresses, prkeys):
+                tx = eth_tx(amount, currency, recipient, sender=address, prkey=prkey)
+                if tx != False:
+                    break
+
+            if tx == False:
+                status = 'failed'
+            else:
+                status = 'success'
+                tx = str(tx.hex())
 
         return jsonify(status=status, transaction_id=tx, recipient=recipient, amount=amount, currency=currency.upper(), network=coin.upper())

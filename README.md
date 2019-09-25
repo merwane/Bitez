@@ -1,7 +1,7 @@
 Bitez: Self hosted cryptocurrency wallet as a service
 ==============================================
 
-**Bitez** _(pronounced Bit Easy)_ is a self hosted cryptocurrency wallet server you can use to create BTC/BCH wallets and perform multiple operations such as transactions and wallets generation with a simple HTTP interface.
+**Bitez** _(pronounced Bit Easy)_ is a self hosted cryptocurrency wallet server you can use to create BTC/BCH/ETH wallets and perform multiple operations such as transactions and wallets generation with a simple HTTP interface.
 
 You will need mongodb to store wallets, user accounts and api keys. Of course, private keys are encrypted before getting stored.
 
@@ -31,7 +31,10 @@ MAIL_PORT='<email smtp server port>'
 MAIL_USERNAME='<email address for account activation>'
 MAIL_PASSWORD='<password for accessing email account>'
 ENCRYPTION_SECRET='<random string used for prkey encryption>'
+INFURA_API_KEY='<infura API key>'
 ```
+**Note:** You will need to create an [Infura](https://infura.io/) account to use ETH.
+
 After saving the file, start the server with one of the following commands:
 ```bash
 # mainnet server
@@ -97,6 +100,9 @@ curl -X GET /api/btc/generate?api_key=<API_KEY>
 
 # BCH
 curl -X GET /api/bch/generate?api_key=<API_KEY>
+
+# ETH
+curl -X GET /api/eth/generate?api_key=<API_KEY>
 ```
 
 ### Get all addresses:
@@ -106,6 +112,9 @@ curl -X GET /api/btc/addresses?api_key=<API_KEY>
 
 # BCH
 curl -X GET /api/bch/addresses?api_key=<API_KEY>
+
+# ETH
+curl -X GET /api/eth/addresses?api_key=<API_KEY>
 ```
 
 ### Get wallet balance:
@@ -115,6 +124,9 @@ curl -X GET /api/btc/balance?api_key=<API_KEY>&currency=<CURRENCY>
 
 # BCH
 curl -X GET /api/bch/balance?api_key=<API_KEY>&currency=<CURRENCY>
+
+# ETH
+curl -X GET /api/eth/balance?api_key=<API_KEY>&currency=<CURRENCY>
 
 # available currencies: btc, bch, usd, eur, gbp, jpy and other major currencies like cad and chf
 ```
@@ -126,6 +138,9 @@ curl -X GET /api/btc/history?api_key=<API_KEY>
 
 # BCH
 curl -X GET /api/bch/history?api_key=<API_KEY>
+
+# ETH (only returns txs number)
+curl -X GET /api/eth/history?api_key=<API_KEY>
 ```
 
 ### Get current rates:
@@ -135,6 +150,9 @@ curl -X GET /api/btc/rates?api_key=<API_KEY>&currency=<CURRENCY>
 
 # BCH
 curl -X GET /api/bch/rates?api_key=<API_KEY>&currency=<CURRENCY>
+
+# ETH
+curl -X GET /api/eth/rates?api_key=<API_KEY>&currency=<CURRENCY>
 
 # available currencies: btc, bch, usd, eur, gbp, jpy and other major currencies like cad and chf
 ```
@@ -147,6 +165,9 @@ curl -X GET /api/btc/rates?api_key=<API_KEY>&currency=<CURRENCY>&amount=<AMOUNT>
 # BCH
 curl -X GET /api/bch/rates?api_key=<API_KEY>&currency=<CURRENCY>&amount=<AMOUNT>
 
+# ETH
+curl -X GET /api/eth/rates?api_key=<API_KEY>&currency=<CURRENCY>&amount=<AMOUNT>
+
 # available currencies: btc, bch, usd, eur, gbp, jpy and other major currencies like cad and chf
 ```
 
@@ -157,6 +178,9 @@ curl -X GET /api/btc/validate?api_key=<API_KEY>&address=<ADDRESS>
 
 # BCH
 curl -X GET /api/bch/validate?api_key=<API_KEY>&address=<ADDRESS>
+
+# ETH
+curl -X GET /api/eth/validate?api_key=<API_KEY>&address=<ADDRESS>
 ```
 
 ### Perform a transaction:
@@ -179,6 +203,15 @@ curl -X POST /api/bch/tx?api_key=<API_KEY>
     "currency": "<CURRENCY>"
 }
 
+# ETH
+curl -X POST /api/eth/tx?api_key=<API_KEY>
+-H 'Content-Type: application/json'
+-d {
+    "recipient":"<ADDRESS>",
+    "amount": <AMOUNT>,
+    "currency": "<CURRENCY>"
+}
+
 # available currencies: btc, bch, satoshi, usd, eur, gbp, jpy and other major currencies like cad and chf
 ```
 
@@ -190,6 +223,8 @@ Based on community needs, I will keep improving the project and adding new funct
 **Donate BTC:** 1HHMRuezg1WAPqGRQ3S8xFKGgmMHZZrCoa
 
 **Donate BCH:** bitcoincash:qrxjktfjdse3ll0ttrll20gykuhqjw764queg3w2tj
+
+**Donate ETH:** 0xfA22ba67aBd32aa6c48795E535162Bd6B311636a
 
 **Donate Love:** Just [tweet](https://twitter.com/merwanedr) me something cool :)
 
@@ -206,3 +241,9 @@ Notes and credits
 * I really wanted to thank [Ofek Lev](https://github.com/ofek) for his library [bit](https://github.com/ofek/bit) and [Sporestack](https://github.com/sporestack) with his fork [bitcash](https://github.com/sporestack/bitcash) which made **Bitez** possible without me having a headache!
 
 * The rates and transaction API for BCH doesn't work on the testnet (dev server) because of a dependency issue. It should be fixed soon.
+
+Changelog
+------------
+* **V0.0.1:** Added support for Bitcoin (BTC)
+* **V0.0.2:** Added support for Bitcoin Cash (BCH)
+* **V0.0.3:** Added support for Ethereum (ETH)

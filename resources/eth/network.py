@@ -1,7 +1,7 @@
 from web3 import Web3
 from config import INFURA_API_KEY, CRYPTO_NETWORK
 
-def eth_network(net='testnet'): # CRYPTO_NETWORK
+def eth_network(net=CRYPTO_NETWORK):
     if net == 'mainnet':
         url = 'https://mainnet.infura.io/v3/'+INFURA_API_KEY
     elif net == 'testnet':

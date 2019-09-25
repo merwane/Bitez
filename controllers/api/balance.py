@@ -7,6 +7,8 @@ from services.api_calls import use_api_key
 from resources.btc.balance import btc_balance
 # bch
 from resources.bch.balance import bch_balance
+# eth
+from resources.eth.balance import eth_balance
 
 # init db
 client = Database()
@@ -50,5 +52,12 @@ class GetBalance(Resource):
             balance = 0
             for prkey in prkeys:
                 balance = balance + float(bch_balance(currency, prkey))
-
+        # Ethereum
+        elif coin == 'eth':
+            # get public address
+            user = db.user.find_one({'api_keys.key': api_key}, {'username': True})
+            wallet = db.wallet.find_one({'username': user['username']}, {'eth_wallet.address': True})
+            balance = 0
+            for address in wallet['eth_wallet']:
+                balance = balance + float(eth_balance(address['address'], currency))
         return jsonify(network=coin.upper(), balance=balance, balance_currency=currency)

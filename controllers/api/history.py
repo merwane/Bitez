@@ -7,6 +7,8 @@ from services.api_calls import use_api_key
 from resources.btc.history import btc_tx_history
 # bch
 from resources.bch.history import bch_tx_history
+# eth
+from resources.eth.history import eth_tx_count
 
 # init db
 client = Database()
@@ -49,5 +51,11 @@ class GetHistory(Resource):
             history = []
             for prkey in prkeys:
                 history.append(bch_tx_history(prkey))
-
-        return jsonify(history)
+        # Ethereum
+        elif coin == 'eth':
+            user = db.user.find_one({'api_keys.key': api_key}, {'username': True})
+            wallet = db.wallet.find_one({'username': user['username']}, {'eth_wallet.address': True})
+            history = 0
+            for address in wallet['eth_wallet']:
+                history = history + int(eth_tx_count(address['address'], 'latest'))
+        return jsonify(transactions=history)

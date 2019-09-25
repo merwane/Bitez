@@ -6,6 +6,8 @@ from services.api_calls import use_api_key
 from resources.btc.rates import btc_to_fiat, fiat_to_btc
 # bch
 from resources.bch.rates import bch_to_fiat, fiat_to_bch
+# eth
+from resources.eth.rates import eth_to_fiat, fiat_to_eth
 
 class RatesToFiat(Resource):
     def get(self, coin):
@@ -19,7 +21,9 @@ class RatesToFiat(Resource):
         # Bitcoin cash
         elif coin == 'bch':
             rate = bch_to_fiat(1, currency)
-
+        # Ethereum
+        elif coin == 'eth':
+            rate = eth_to_fiat(1, currency)
         return jsonify(network=coin.upper(), rate=rate, currency=currency.upper())
 
 class RatesToCrypto(Resource):
@@ -35,5 +39,7 @@ class RatesToCrypto(Resource):
         # Bitcoin cash
         elif coin == 'bch':
             rate = fiat_to_bch(float(amount), currency)
-
+        # Ethereum
+        elif coin == 'eth':
+            rate = fiat_to_eth(float(amount), currency)
         return jsonify(network=coin.upper(), rate=rate, currency=currency.upper())

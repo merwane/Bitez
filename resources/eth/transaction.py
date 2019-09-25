@@ -13,7 +13,8 @@ def eth_tx(amount, currency, recipient, sender, prkey):
     to=recipient,
     value=w3.toWei(float(eth_amount),'ether')                          
     ), prkey)
-    
-    tx = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
-
+    try:    
+        tx = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+    except ValueError:
+        tx = False
     return tx

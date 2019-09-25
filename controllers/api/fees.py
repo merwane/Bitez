@@ -6,6 +6,8 @@ from services.api_calls import use_api_key
 from resources.btc.fees import btc_tx_fees
 # bch
 from resources.bch.fees import bch_tx_fees
+# eth
+from resources.eth.fees import eth_tx_fees
 
 class GetTxFees(Resource):
     def get(self, coin):
@@ -22,5 +24,9 @@ class GetTxFees(Resource):
             unit = 'satoshis/byte'
             tx_fees = bch_tx_fees()
             tx_fees_fast = False
-
+        # Ethereum
+        elif coin == 'eth':
+            unit = 'wei'
+            tx_fees = eth_tx_fees()
+            tx_fees_fast = False
         return jsonify(network=coin.upper(), unit=unit, tx_fees=tx_fees, tx_fees_fast=tx_fees_fast)
