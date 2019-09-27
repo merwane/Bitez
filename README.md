@@ -1,7 +1,7 @@
 Bitez: Self hosted cryptocurrency wallet as a service
 ==============================================
 
-**Bitez** _(pronounced Bit Easy)_ is a self hosted cryptocurrency wallet server you can use to create BTC/BCH/ETH wallets and perform multiple operations such as transactions and wallets generation with a simple HTTP interface.
+**Bitez** _(pronounced Bit Easy)_ is a self-hosted cryptocurrency wallet server you can use to create BTC/BCH/ETH wallets and perform multiple operations such as transactions and wallets generation with a simple HTTP interface.
 
 You will need mongodb to store wallets, user accounts and api keys. Of course, private keys are encrypted before getting stored.
 
