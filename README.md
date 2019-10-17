@@ -10,6 +10,8 @@ I created **Bitez** because I wanted a free alternative to [Block.io](https://bl
 <span style="color: red;"><strong>Important:</strong></span>
 **Bitez** is still in alpha and therefore shouldn't be used for serving a large application with a large user base. Serving it for a small application is probably fine. I'm 20 and I'm broke so I don't want to be involved in any lawsuit haha
 
+### 🌈Bitez won the [Consensys Social Impact Challenge](https://github.com/ConsenSys/ConsenSysGrants-Challenges/issues/5)! (10/17/2019)🌈
+
 Installation
 ------------
 After cloning this repository, you'll need to install all the dependencies:
